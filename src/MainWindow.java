@@ -16,6 +16,9 @@ public class MainWindow{
     // main class 
 	public MainWindow(WatchLibraryFolder ws)
 	{
+		
+		Logger log = Logger.getInstance();
+		log.info("Main Window initialized");
 		Panelfrom= new String();
 		//bl = new ButtonListener(this);
 	    frame = new JFrame("Book Reader");
@@ -26,6 +29,7 @@ public class MainWindow{
 		cards.add(libraryPanel,"Library");
 		frame.getContentPane().add(cards);
 		frame.pack();
+		log.info("Changing to library Window");
 		frame.setVisible(true);
 	}
     

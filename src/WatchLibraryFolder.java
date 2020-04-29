@@ -12,6 +12,7 @@ public class WatchLibraryFolder implements Runnable, Subject {
 	 private boolean trace = false;
 	 private ArrayList<Path> createFileList;
 	 private ArrayList<Path> deleteFileList;
+	 private Logger log = Logger.getInstance();
 	 
 	 @SuppressWarnings("unchecked")
 	    static <T> WatchEvent<T> cast(WatchEvent<?> event) {
@@ -22,20 +23,24 @@ public class WatchLibraryFolder implements Runnable, Subject {
 	 public WatchLibraryFolder(Path dir, Object o) throws IOException {
 	        this.watcher = FileSystems.getDefault().newWatchService();
 	        this.keys = new HashMap<WatchKey,Path>();
+	        
 	        register(dir);
 	        // enable trace after initial registration
+	        log.info("Directory registered"+dir.toString());
 	        this.trace = true;
-	        ArrayList<Path> createFileList = new ArrayList<Path>();
-	        ArrayList<Path> deleteFileList = new ArrayList<Path>();
+	        
 	    }
 	 
 	 
 	 private void register(Path dir) throws IOException {
+		 	log.info("Registering the directory "+dir.toString()+"for watch Service");
 	        WatchKey key = dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE);
 	        if (trace) {
 	            Path prev = keys.get(key);
 	            if (prev == null) {
 	                System.out.format("register: %s\n", dir);
+	                
+	                
 	            } else {
 	                if (!dir.equals(prev)) {
 	                	
@@ -69,6 +74,7 @@ public class WatchLibraryFolder implements Runnable, Subject {
 	            for (WatchEvent<?> event: key.pollEvents()) {
 	                WatchEvent.Kind kind = event.kind();
 	                
+	                log.info("Notifying the observers");
 	                this.notifyObservers(event);
 	                // TBD - provide example of how OVERFLOW event is handled
 	                if (kind == OVERFLOW) {
@@ -82,6 +88,7 @@ public class WatchLibraryFolder implements Runnable, Subject {
 	 
 	                // print out event
 	                System.out.format("%s: %s\n", event.kind().name(), child);
+	                log.info("New Event: "+event.kind().name()+"on file "+child.toString());
 	 
 	                // if directory is created, and watching recursively, then
 	                // register it and its sub-directories
@@ -95,6 +102,7 @@ public class WatchLibraryFolder implements Runnable, Subject {
 	 
 	                // all directories are inaccessible
 	                if (keys.isEmpty()) {
+	                	log.info("WatchService -  Directories are in accessible")
 	                    break;
 	                }
 	            }

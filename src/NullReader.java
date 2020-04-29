@@ -1,4 +1,5 @@
 import java.io.*;
+import java.awt.image.BufferedImage;
 public class NullReader extends Reader{
 
 	public NullReader()
@@ -14,6 +15,10 @@ public class NullReader extends Reader{
 		return "";
 				
 				
+	}
+	public BufferedImage getCover()
+	{
+		return new BufferedImage(50, 50, BufferedImage.TYPE_INT_ARGB);
 	}
 	
 }

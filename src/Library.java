@@ -24,7 +24,7 @@ public class Library implements MyObserver{
 	JPanel mainLayout;
 	
 	JPanel jPanel;
-	
+	private Logger log;
 	JLabel label;
 	MainWindow mWindow;
 	
@@ -32,6 +32,8 @@ public class Library implements MyObserver{
 	
 	Library(WatchLibraryFolder ws,MainWindow mw)
 	{
+		log = Logger.getInstance();
+		log.info("Intializing the Library Class");
 		this.wLibraryFolder = ws;
 		this.wLibraryFolder.registerObserver(this);
 		folderPath = new String("D:\\hw\\OOAD\\New folder");
@@ -67,14 +69,18 @@ public class Library implements MyObserver{
 	{
 		  String[] FileList = (new File(folderPath)).list();
 		  
+		  log.info("Adding books to library");
 		  for(String file:FileList)
-			  bookPaths.add(folderPath+'\\'+file);
+			  {bookPaths.add(folderPath+'\\'+file);
+			  log.info("Book "+file+"is added to the list");
+			  }
 	}
 	
 	public void setBookstoButtons()
 	{
 		try
 		{
+		log.info("setting books to buttons");
 		for(int i=0;i<bookPaths.size();i++)
 		{
 			
@@ -84,7 +90,7 @@ public class Library implements MyObserver{
 		}
 		catch(Exception e)
 		{
-			System.out.println("Exception occured at setBookstoButton"+e);
+			log.info("Exception occured at setBookstoButton"+e);
 		}
 		
 	}
@@ -106,14 +112,19 @@ public class Library implements MyObserver{
 	{
 		
 		
+		log.info("Getting cover for the book");
 		BufferedImage bim = (rFactory.createReader(path)).getCover();
 		
 		JButton button  = new JButton(new ImageIcon(bim));
 		button.setPreferredSize(new Dimension(200, 300));
 		button.setBorder(BorderFactory.createEmptyBorder());
 		button.setContentAreaFilled(false);
-		bookButtonList.add(button);
+		log.info("Setting actionlistener for the book");
+		BookButtonListener bListener = new BookButtonListener(this.mWindow, path);
 		
+		button.addActionListener(bListener);
+		bookButtonList.add(button);
+		log.info("Button added to the book");
 		
 		return button;
 	}
@@ -134,20 +145,26 @@ public class Library implements MyObserver{
         
         // Context for directory entry event is the file name of entry
         WatchEvent<Path> ev = cast(event);
+        log.info("Received new evernt from Watch Service");
+        
         Path name = ev.context();
+        log.info("Event: "+event.kind().name()+" for file "+name.toString());
         try {
         
 		if(event.kind().name().equals("ENTRY_CREATE"))
 		{
 			TimeUnit.SECONDS.sleep(2);
+			log.info("Adding book to buttonlist");
 			bookPaths.add(folderPath+'\\'+name.toString());
 			JButton button = addBookButton(folderPath+'\\'+name.toString());
 				addButtonToPanel(button);
 		}
 		else if(event.kind().name().equals("ENTRY_DELETE"))
 		{
+			log.info("Removing book "+name.toString()+" to buttonlist");
 			removeBookButton(folderPath+'\\'+name.toString());	
 		}
+		
 		this.mWindow.reloadWindow();	
 		
         System.out.format("%s: %s\n", event.kind().name(), name);

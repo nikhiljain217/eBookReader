@@ -16,7 +16,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
 import java.util.HashMap;
-
+/*
+ * 
+ * 
+ * This class is responsibe for second window of the application.
+ * */
 
 
 public class BookCard extends AbstractCard{
@@ -34,6 +38,8 @@ public class BookCard extends AbstractCard{
 	JLabel lMeaning;
 	JPanel popupMeaningPanel; 
 	JButton bAddToPersonalVocabulary;
+	
+	//Constructor to initiate the bookcard class
 	BookCard(MainWindow mWindow, String bookPath)
 	{
 		super(mWindow);
@@ -81,6 +87,7 @@ public class BookCard extends AbstractCard{
 	}
 	
 	
+	//To initialize the bookcard Commponents
 	public void initializeBookCard()
 	{
 		addComponentsToPanel();
@@ -88,6 +95,8 @@ public class BookCard extends AbstractCard{
 		showText();
 	}
 	
+	
+	//Adding Listener to the component of the panel
 	public void addListeners()
 	{
 		
@@ -188,9 +197,11 @@ public class BookCard extends AbstractCard{
 		
 	}
 	
+	//A function which chang the screen to parent window
 	public void switchToParent()
 	{
 		
+		//Setting the bookmark here
 		log.info("Setting the bookmark");
 		book.setBookmark(bookPath, currentPage);
 		
@@ -200,22 +211,8 @@ public class BookCard extends AbstractCard{
 	
 	
 	
-	/*public void addComponentsToPanel()
-	{
-		cardPanel.add(toolbar);
-		cardPanel.add(tarea);
-	}*/
 	
-	
-	
-	
-	/*public void setPageNumber(int page)
-	{
-		log.info(String.format("Jumping to Page Number %d", page));
-		currentPage=page;
-		showText();
-	}*/
-	
+	//Function to higlight or remove the save snippet for the book
 	public void showHideSnippet(boolean enable)
 	{
 		SnippetList = book.getSnippetList(bookPath);
@@ -251,6 +248,7 @@ public class BookCard extends AbstractCard{
 
 		}
 	
+	//Function to Open Personal Vocabulary
 	public void switchToVocab()
 	{
 		this.mWindow.addCard("PVocubalary","");

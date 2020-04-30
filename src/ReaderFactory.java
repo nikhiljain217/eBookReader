@@ -1,7 +1,10 @@
 import java.io.IOException;
 import java.util.*;
 import org.apache.commons.io.FilenameUtils;
-
+/*
+ * 
+ * This is class is implementing simple Factory pattern to create reader object
+ * */
 public class ReaderFactory {
 
 	ReaderFactory()
@@ -9,6 +12,7 @@ public class ReaderFactory {
 		
 	}
 	
+	//Create the reader object based on extension
 	public Reader createReader(String path)
 	{	
 		Reader reader = null;

@@ -23,6 +23,9 @@ public abstract class AbstractCard {
 	public abstract void switchToParent();
 	HashMap<Integer,String> pageMap;
 	Dictionary dictionary;
+	
+	//Constructor to initiate Abstract Card
+	
 	AbstractCard(MainWindow mWindow)
 	{
 		
@@ -50,17 +53,23 @@ public abstract class AbstractCard {
 		
 	}
 	
+	//Function to get the Panel for respective pane
 	public JPanel getPanel()
 	{
 		return cardPanel;
 	}
 	
+	
+	//Adding components to Panel
 	public void addComponentsToPanel()
 	{
 		cardPanel.add(toolbar);
 		cardPanel.add(tarea);
 	}
 	
+	
+	
+	//Function to toggle Night Mode
 	public void toggleNightMode(boolean enable)
 	{
 		if(enable)
@@ -82,6 +91,8 @@ public abstract class AbstractCard {
 		}
 	}
 	
+	
+	//function to jump to Particular Page
 	public void setPageNumber(int page)
 	{
 		log.info(String.format("Jumping to Page Number %d", page));
@@ -89,11 +100,14 @@ public abstract class AbstractCard {
 		showText();
 	}
 	
+	//Function to get the current Page number
 	public int getCurrentPageNumber()
 	{
 		return currentPage; 
 	}
 	
+	
+	//Function to Highlight the searched string
 	public void searchWord(String text)
 	{
 		Highlighter h = tarea.getHighlighter();
@@ -121,6 +135,8 @@ public abstract class AbstractCard {
 		}
 		
 	}
+	
+	//Function to show the text in the pane.
 	public void showText()
 	{
 		tarea.setText(pageMap.get(currentPage));

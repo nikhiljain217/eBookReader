@@ -10,6 +10,12 @@ import java.sql.ResultSetMetaData;
 
 import org.sqlite.JDBC;
 
+/**
+ * 
+ * This is a singleton class 
+ * This is main class which integrate direcctly with Sqlite database with JDBC driver
+ *
+ */
 
 public class Database {
 
@@ -21,6 +27,8 @@ public class Database {
 	{
 		this.log = Logger.getInstance();
 	}
+	
+	//Function to connect to database
 	private void connect() throws SQLException
 	{
 		try {
@@ -40,6 +48,7 @@ public class Database {
         
 	}
 	
+	//To get instance of database, making sure sinlge instance is created.
 	public synchronized static Database getInstance()
 	{
 		if(db==null)
@@ -59,6 +68,7 @@ public class Database {
 			}
 	}
 	
+	//Function to run Select query and return the results
 	public synchronized ArrayList<ArrayList<Object>> selectQuery(String query)
 	{
 		
@@ -110,6 +120,7 @@ public class Database {
 		
 	}
 	
+	//Function to run update Query on the database
 	public synchronized boolean updateQuery(String query)
 	{
 		try
@@ -142,6 +153,7 @@ public class Database {
 		
 	
 	
+	//Function which runs insertquery on the database
 	public synchronized int insertQuery(String query)
 	{
 		
@@ -175,6 +187,7 @@ public class Database {
 	return record;	
 	}
 	
+	//Function which run delete query on database.
 	public void deleteQuery(String query)
 	{
 		try

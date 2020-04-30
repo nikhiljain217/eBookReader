@@ -5,6 +5,12 @@ import static java.nio.file.LinkOption.*;
 import static java.nio.file.StandardWatchEventKinds.*;
 import java.util.*;
 
+
+/*
+ * 
+ * Class which monitors the Library folder
+ * This run as separate thread and use in-built pattern observer pattern
+ * */
 public class WatchLibraryFolder implements Runnable, Subject {
 
 	 private WatchService watcher;
@@ -32,6 +38,7 @@ public class WatchLibraryFolder implements Runnable, Subject {
 	    }
 	 
 	 
+	 //For registering path to the service
 	 private void register(Path dir) throws IOException {
 		 	log.info("Registering the directory "+dir.toString()+"for watch Service");
 	        WatchKey key = dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE);
@@ -53,7 +60,7 @@ public class WatchLibraryFolder implements Runnable, Subject {
 	  }
 	 
 	 
-	 
+	 //This class process new events on the folder.
 	 void processEvents() {
 	        for (;;) {
 	 

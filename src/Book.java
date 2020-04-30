@@ -2,6 +2,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * 
+ * Class which interact with Database class to get and manipulate data for Book and snippet table
+ *
+ */
+
 public class Book {
 
 	
@@ -13,6 +19,8 @@ public class Book {
 		db = Database.getInstance();
 	}
 	
+	
+	//To check if the book is present in the Database
 	public ArrayList<ArrayList<Object>> checkBookInDatabase(String bookPath)
 	{
 		
@@ -23,6 +31,7 @@ public class Book {
 		return db.selectQuery(query);
 	}
 	
+	// To add the book in Database if it is not present
 	public int addBookToDatabse(String bookPath)
 	{
 		String query = String.format("Insert into Books(path) values(\"%s\")",bookPath);
@@ -32,7 +41,7 @@ public class Book {
 	}
 	
 	
-	
+	// To get the bookmark of the book opened
 	public int getBookmark(String bookPath)
 	{
 		ArrayList<ArrayList<Object>> results = checkBookInDatabase(bookPath);
@@ -54,6 +63,8 @@ public class Book {
 		return bookmark;
 	}
 	
+	
+	// To set the bookmark when user click on back button
 	public void setBookmark(String bookPath, int bookmark)
 	{
 		String query = String.format("Update Books set bookmark= %d where path=\"%s\"",bookmark,bookPath);
@@ -66,6 +77,8 @@ public class Book {
 			System.out.println("Bookmark did not set for the book.");
 		
 	}
+	
+	//To get the bookid from the database
 	public int getBookID(String bookPath)
 	{
 		ArrayList<ArrayList<Object>> results = checkBookInDatabase(bookPath);
@@ -83,6 +96,8 @@ public class Book {
 		
 	}
 	
+	
+	// To add new snippet for a book from the Database
 	public void addSnippet(String bookPath,int offset,int length,int pageNumber)
 	{
 		
@@ -101,6 +116,7 @@ public class Book {
 		
 	}
 	
+	//To get Snippet List for the book from the Database
 	public ArrayList<int[]> getSnippetList(String bookPath)
 	{
 		int bookId =getBookID(bookPath);
@@ -129,6 +145,7 @@ public class Book {
 		return SnippetList;
 	}
 	
+	// To remove Snippet from the book from the database
 	public void removeSnippet(String bookPath,int offset, int length,int pageNumber)
 	{
 		int bookId =getBookID(bookPath);

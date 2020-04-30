@@ -1,6 +1,13 @@
 import java.awt.event.*; 
+
 import java.awt.*; 
 import javax.swing.*; 
+/*
+ * 
+ * 
+ * This is mainWIndow which is responsible for creating Jframe and moving the screen between different panels
+ * */
+
 public class MainWindow{ 
 	
 	
@@ -39,6 +46,7 @@ public class MainWindow{
 	}
     
 	
+	//Function to reload the window in case of changes
 	public void reloadWindow()
 	{
 		log.info("Reloading the window");
@@ -46,70 +54,8 @@ public class MainWindow{
 		frame.repaint();
 	}
 	
-	/*
-    public void GUI()
-    {
-
-   	 String BUTTONPANEL = "Card with JButtons";
-   	 String TEXTPANEL = "Card with JTextField";
-   	 JButton bPane12 = new JButton("Pane-2");  
-   	 JButton bPane13 = new JButton("Pane-3");
-   	JPanel card1 = new JPanel();
-   	
-   	
-   	card1.add(bPane12);
-   	card1.add(bPane13);
-   	
-   	//card2 cd2 = new card2(this);
-   	//bookcard = cd2.getPanel();
-   	JPanel card3 = new JPanel();
-   	JButton bParent = new JButton("Parent");
-   	card3.add(bParent);
-   	
-   	
-       cards.add(card1, "Library");
-       //cards.add(bookcard, "Reader");
-       cards.add(card3, "Personal Voc");
-   	
-   	
-   	frame.getContentPane().add(cards);
-       bPane12.addActionListener(bl);
-       
-       bPane13.addActionListener(new ActionListener() {
-    	   	
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				CardLayout cardLayout = (CardLayout) cards.getLayout();
-				cardLayout.show(cards,"Personal Voc");
-				Panelfrom = "Library";
-			}
-		});
-       
-       
-       bParent.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				CardLayout cardLayout = (CardLayout) cards.getLayout();
-				cardLayout.show(cards,Panelfrom);
-			}
-		});
-       
-       frame.pack();
-       frame.setVisible(true); 
-
-    }
-    
-    public void setPanelFrom(String pf)
-    {
-    	this.Panelfrom = pf; 
-    }
-    /*
-     * 
-     * 
-     * 
-     */
 	
+	//Function to remove the card from cardlayout
 	public void resetCard()
   
     {
@@ -129,6 +75,7 @@ public class MainWindow{
     		
     }
     
+	//Function to add the card when new panel is initiated
     public void addCard(String cardType, String bookPath)
     {
     	if(cardType=="Reader")
@@ -151,10 +98,13 @@ public class MainWindow{
     	
     }
     
+    //Function to return card layout
     public JPanel getCards()
     {
     	return this.cards;
     }
+    
+    //Function which changes the screen 
     public void changeScreen(String screen)
     {
     	log.info("Changing screen to "+screen);

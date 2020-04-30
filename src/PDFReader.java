@@ -16,7 +16,11 @@ import org.apache.pdfbox.tools.imageio.ImageIOUtil;
 import net.coobird.thumbnailator.*;
 import org.apache.commons.*;
 
-
+/*
+ * 
+ * 
+ * Class which handles extracting cover, text and other metadata from the pdf file.
+ * */
 
 public class PDFReader extends Reader{
 
@@ -31,6 +35,8 @@ public class PDFReader extends Reader{
 		
 	}
 	
+	
+	//Return the total Page Number in the pdf File
 	public int getTotalPageNumber()
 	{
 		
@@ -49,7 +55,7 @@ public class PDFReader extends Reader{
 		return numberOfPages;
 	}
 	
-
+	//Return the text in the pdf file in the form of Hashmap mapping page number with the text
 	public HashMap<Integer,String> getText()
 	{
 		String text = new String();
@@ -78,6 +84,8 @@ public class PDFReader extends Reader{
 		return pageMap;
 	}
 	
+	
+	//Return the cover of pdf - useful for Library Pane
 	public BufferedImage getCover() throws IOException
 	{
 		PDDocument pdfReader = PDDocument.load(new File(this.pdfPath));

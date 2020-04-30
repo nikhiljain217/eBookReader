@@ -12,7 +12,11 @@ import java.awt.image.BufferedImage;
 import java.nio.file.Path;
 import java.nio.file.WatchEvent;
 import java.util.concurrent.TimeUnit;
-
+/*
+ * 
+ * This is a observer class for watchLibraryFolder subject.
+ * This shows the books cover which is present in Library folder.
+ * */
 
 public class Library implements MyObserver{
 
@@ -29,7 +33,7 @@ public class Library implements MyObserver{
 	MainWindow mWindow;
 	
 	
-	
+	//Constructor to initiate Library class
 	Library(WatchLibraryFolder ws,MainWindow mw)
 	{
 		log = Logger.getInstance();
@@ -48,11 +52,13 @@ public class Library implements MyObserver{
 		
 	}
 	
+	//Function to return corresponding panel
 	public JPanel getPanel()
 	{
 		return jPanel;
 	}
 	
+	//Function to add and set components of the Library Panel
 	public void initializeLibrary()
 	{
 		
@@ -61,6 +67,7 @@ public class Library implements MyObserver{
 		
 	}
 	
+	//Function to add Files in the Folder to BookList
 	public void addFilesToBookPath()
 	{
 		  String[] FileList = (new File(folderPath)).list();
@@ -72,6 +79,7 @@ public class Library implements MyObserver{
 			  }
 	}
 	
+	//Function to set the books cover page as button.
 	public void setBookstoButtons()
 	{
 		try
@@ -99,11 +107,14 @@ public class Library implements MyObserver{
         return (WatchEvent<T>)event;
     }
 	
+	//Function which adds button to the Panel
 	public void addButtonToPanel(JButton btn)
 	{
 		jPanel.add(btn);
 		
 	}
+	
+	//Function to add New book button
 	public JButton addBookButton(String path) throws IOException
 	{
 		
@@ -125,6 +136,7 @@ public class Library implements MyObserver{
 		return button;
 	}
 	
+	//Function to remove the book from the list
 	public void removeBookButton(String path)
 	{
 		int index = bookPaths.indexOf(path);
@@ -135,6 +147,8 @@ public class Library implements MyObserver{
 		
 	}
 	
+	
+	//update Function which is called when there is some new addition or deletion in the monitoring Folder;
 	@Override
 	public void update(WatchEvent<?> event) {
 		

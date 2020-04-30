@@ -1,4 +1,9 @@
 import java.util.*;
+/*
+ * 
+ * This is the class which is interacting with Database and will manipulate and get information from Dictionary table
+ */
+
 
 public class Dictionary {
 
@@ -10,6 +15,8 @@ public class Dictionary {
 		log = Logger.getInstance();
 	}
 	
+	
+	//Function to get meaning of the Database
 	public String getWordMeaning(String word)
 	{
 		String query = String.format("Select * from Dictionary where word= \"%s\"",word);
@@ -30,6 +37,7 @@ public class Dictionary {
 		
 	}
 	
+	//Function to add the word to Personal Dictonary
 	public void addToPDictionary(String word){
 		
 		String query =String.format("Update Dictionary set ispv=%d where word =\"%s\" ",1,word); 
@@ -42,6 +50,7 @@ public class Dictionary {
 		
 	}
 	
+	//Function to get PageMap to show PersonalVocabulary 
 	public HashMap<Integer,String> getPageMapDictionary()
 	{
 		String query = String.format("Select word, meaning from Dictionary where ispv=1");

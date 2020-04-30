@@ -1,6 +1,12 @@
 import java.io.FileWriter; 
 import java.io.IOException; 
- 
+ /**
+  * 
+  * 
+  * This is logger class implementing singleton pattern
+  *
+  *
+  */
  public class Logger {
 	static Logger log;
 	private Logger()
@@ -13,6 +19,8 @@ import java.io.IOException;
 		return log;
 	}
 	
+	
+	//This function write the corresponding string to the file
 	public void info(String logText)
 	{
 		

@@ -17,8 +17,6 @@ public abstract class AbstractCard {
 	MainWindow mWindow;
 	Logger log;
 	JPanel cardPanel;
-	String text;
-	String bookPath;
 	Integer currentPage;
 	public abstract void switchToParent();
 	HashMap<Integer,String> pageMap;

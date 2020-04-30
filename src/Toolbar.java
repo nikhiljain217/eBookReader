@@ -5,7 +5,12 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
-
+/**
+ * 
+ * 
+ *A class which is extending JPanel.
+ *This is the top toolbar of the application
+ */
 public class Toolbar extends JPanel{
 
 	public JToggleButton bPersonalVocabulary;
@@ -56,6 +61,8 @@ public class Toolbar extends JPanel{
 		
 	}
 	
+	
+	//Function to add the components to toolbar panel
 	public void addComponents()
 	{
 		this.add(tSearchBox);
@@ -72,10 +79,11 @@ public class Toolbar extends JPanel{
 	}
 	
 	
+	//Function to add listener to various panel
 	public void addListeners()
 	{
 		
-		
+		//Listener to jump to page
 		tPageNumber.addActionListener(new ActionListener()
 				{
 					@Override
@@ -92,6 +100,7 @@ public class Toolbar extends JPanel{
 				}
 				);
 		
+		//Listener to go back to parent pane
 		bParent.addActionListener(new ActionListener() {
 			
 			@Override
@@ -101,7 +110,7 @@ public class Toolbar extends JPanel{
 				card.switchToParent();
 			}
 		});
-		
+		//Listener to jump to previous page
 		bPrevious.addActionListener(new ActionListener() {
 			
 			@Override
@@ -133,6 +142,7 @@ public class Toolbar extends JPanel{
 			}
 		});
 		
+		//Listener for jumping to next page
 		bNext.addActionListener(new ActionListener() {
 			
 			@Override
@@ -159,7 +169,7 @@ public class Toolbar extends JPanel{
 			}
 		});
 		
-		
+		//Listener fore enabling/disabling night mode
 		bNightMode.addItemListener(new ItemListener()
 				{
 				
@@ -178,7 +188,7 @@ public class Toolbar extends JPanel{
 				
 				);
 		
-		
+		//Listener for enabling/disabling snippet highlight
 		bHighlight.addItemListener(new ItemListener()
 		{
 			public void itemStateChanged(ItemEvent itemEvent)
@@ -195,7 +205,7 @@ public class Toolbar extends JPanel{
 		
 		});
 		
-		
+		//Listener to search word in the text
 		 tSearchBox.addCaretListener(new CaretListener() {
 			
 			@Override
@@ -205,6 +215,7 @@ public class Toolbar extends JPanel{
 			}
 		});
 		 
+		 //Listener for moving to personal vocabulary page
 		 bPersonalVocabulary.addItemListener(new ItemListener() {
 				 
 			 public void itemStateChanged(ItemEvent itemEvent)
@@ -237,6 +248,7 @@ public class Toolbar extends JPanel{
 		
 	}
 	
+	//Function to disable higlight button
 	public void disableHighlightButton()
 	{
 		bHighlight.setEnabled(false);

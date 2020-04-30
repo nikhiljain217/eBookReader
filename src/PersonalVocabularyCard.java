@@ -1,4 +1,7 @@
-
+/*
+ * 
+ * Class for third pane of the application to show personal Vocabulary
+ * */
 public class PersonalVocabularyCard extends AbstractCard {
 
 	PersonalVocabularyCard(MainWindow mWindow)
@@ -14,12 +17,15 @@ public class PersonalVocabularyCard extends AbstractCard {
 		
 	}
 	
+	//Initialize the Pane
 	public void initilializePersonal()
 	{
 		showText();
 		addComponentsToPanel();
 	}
 
+	
+	//Function to move back to parent pane
 	@Override
 	public void switchToParent() {
 		this.mWindow.changeScreen("Reader");

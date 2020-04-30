@@ -1,6 +1,10 @@
 import java.io.*;
 import java.util.HashMap;
 import java.awt.image.BufferedImage;
+
+/*
+ * NullReader - Null object Pattern for the files which are not supported yet
+ * */
 public class NullReader extends Reader{
 
 	public NullReader()

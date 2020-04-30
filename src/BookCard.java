@@ -27,17 +27,17 @@ public class BookCard extends AbstractCard{
 	
 	
 	Book book;
-	
-	JButton bAddHighlight;
-	JButton bRemoveHighlight;
-	JPanel popupHighlightPanel;
-	Popup pHighlight;
-	Popup pMeaning;
-	PopupFactory pf;
-	ArrayList<int[]> SnippetList;
-	JLabel lMeaning;
-	JPanel popupMeaningPanel; 
-	JButton bAddToPersonalVocabulary;
+	String bookPath;
+	private JButton bAddHighlight;
+	private JButton bRemoveHighlight;
+	private JPanel popupHighlightPanel;
+	private Popup pHighlight;
+	private Popup pMeaning;
+	private PopupFactory pf;
+	private ArrayList<int[]> SnippetList;
+	private JLabel lMeaning;
+	private JPanel popupMeaningPanel; 
+	private JButton bAddToPersonalVocabulary;
 	
 	//Constructor to initiate the bookcard class
 	BookCard(MainWindow mWindow, String bookPath)
@@ -48,6 +48,7 @@ public class BookCard extends AbstractCard{
 		
 		//Creating Book Instance
 		this.book =new Book();
+		
 		
 		this.bookPath = bookPath;
 		//Initializing Text area

@@ -3,7 +3,9 @@ Used Java and swing to create ebookReader for pdf files
 
 # Team Member
 Nikhil Jain(nija5462)
+
 Harshit Hajela(haha4350)
+
 Anusha Gupta(angu5645)
 
 # Steps to run

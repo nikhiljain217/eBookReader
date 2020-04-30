@@ -3,7 +3,7 @@ import java.awt.*;
 import javax.swing.*; 
 
 public class card2{
-
+	/*
 	JButton bPane21;
 	JButton bPane23;
 	JTextField SearchWord;
@@ -61,5 +61,5 @@ public class card2{
 			
 		}
 	
-	
+	*/
 }

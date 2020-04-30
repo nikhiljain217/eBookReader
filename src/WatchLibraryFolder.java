@@ -102,7 +102,7 @@ public class WatchLibraryFolder implements Runnable, Subject {
 	 
 	                // all directories are inaccessible
 	                if (keys.isEmpty()) {
-	                	log.info("WatchService -  Directories are in accessible")
+	                	log.info("WatchService -  Directories are in accessible");
 	                    break;
 	                }
 	            }

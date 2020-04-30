@@ -17,7 +17,7 @@ import java.io.IOException;
 	{
 		
 		try {
-			FileWriter writer = new FileWriter("debugging.txt");
+			FileWriter writer = new FileWriter("debugging.txt",true);
 			
 			writer.write(logText);
 			writer.close();

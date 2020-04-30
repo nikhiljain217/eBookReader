@@ -13,15 +13,21 @@ public class Book {
 		db = Database.getInstance();
 	}
 	
-	public ResultSet checkBookInDatabase(String bookPath)
+	public ArrayList<ArrayList<Object>> checkBookInDatabase(String bookPath)
 	{
-		String query = String.format("Select * from where path=\"%s\"",bookPath);
+		
+		String query = String.format("Select * from books where path=\"%s\"",bookPath);
+		
+		System.out.println("Executing this query "+query);
+		log.info("Executing this query -"+query);
 		return db.selectQuery(query);
 	}
 	
 	public int addBookToDatabse(String bookPath)
 	{
-		String query = String.format("Insert into Books values(\"5s\")",bookPath);
+		String query = String.format("Insert into Books(path) values(\"%s\")",bookPath);
+		System.out.println("Executing this query "+query);
+		log.info("Executing this query -"+query);
 		return db.insertQuery(query);
 	}
 	
@@ -29,21 +35,21 @@ public class Book {
 	
 	public int getBookmark(String bookPath)
 	{
-		ResultSet rs = checkBookInDatabase(bookPath);
-		int bookmark=1;
+		ArrayList<ArrayList<Object>> results = checkBookInDatabase(bookPath);
+		int bookmark=2;
 		try {
-			if(rs.next()==false)
+			if(results.size()==0)
 			{
 				log.info("Book is not present in database");
 				log.info("Lets add the book to database");
 				addBookToDatabse(bookPath);
 				return bookmark;
 			}
-				bookmark=rs.getInt(3);
-			} catch (SQLException e) {
+				bookmark = (Integer) results.get(0).get(2);
+			} catch (Exception e) {
 			
-			log.info("Exception occur in Book constructor "+e.getMessage());
-			System.out.println("Exception occur in Book constructor "+e.getMessage());
+			log.info("Exception occur in getBookmark "+e.getMessage());
+			System.out.println("Exception occur in getBookMark "+e.getMessage());
 		}
 		return bookmark;
 	}
@@ -62,11 +68,14 @@ public class Book {
 	}
 	public int getBookID(String bookPath)
 	{
-		ResultSet rs = checkBookInDatabase(bookPath);
+		ArrayList<ArrayList<Object>> results = checkBookInDatabase(bookPath);
 		int bookId=0;
 		try {
-			bookId =  rs.getInt(1);
-		} catch (SQLException e) {
+		
+			bookId = (Integer) results.get(0).get(0);
+		
+			
+		} catch (Exception e) {
 			log.info("Exception occur while getting BookID  "+e.getMessage());
 			System.out.println("Exception occur while getting BookID "+e.getMessage());
 		}
@@ -74,7 +83,7 @@ public class Book {
 		
 	}
 	
-	public void addSnippet(String bookPath,int offset,int length)
+	public void addSnippet(String bookPath,int offset,int length,int pageNumber)
 	{
 		
 		int bookId =getBookID(bookPath);
@@ -83,7 +92,7 @@ public class Book {
 			if(bookId==0)
 				throw new IllegalStateException("The book is not added in the Database");
 			log.info("Adding new snippet to the database");
-			String query = String.format("Insert into Snippet(offset,length,book_id) values(%d,%d,%d)", offset, length, bookId);
+			String query = String.format("Insert into Snippet(page,offset,length,book_id) values(%d,%d,%d,%d)",pageNumber,offset, length, bookId );
 			db.insertQuery(query);
 		} catch (Exception e) {
 			log.info("Exception occur while getting BookID  "+e.getMessage());
@@ -101,24 +110,26 @@ public class Book {
 				throw new IllegalStateException("The book is not added in the Database");
 			log.info("Getting SnippetList for bookPath "+bookPath);
 			
-			String query = "Select offset,length from Snippet where book_id = "+bookId;
-			ResultSet rs = db.selectQuery(query);
-			while(rs.next())
+			String query = "Select page, offset, length from Snippet where book_id = "+bookId;
+			ArrayList<ArrayList<Object>> results = db.selectQuery(query);
+			
+			for(int i=0;i<results.size();i++)
 			{
-				int[] local = new int[2];
-				local[0]=rs.getInt(2);
-				local[1]=rs.getInt(3);
+				int[] local = new int[3];
+				local[0]= (Integer) results.get(i).get(0);
+				local[1]=(Integer) results.get(i).get(1);
+				local[2]=(Integer) results.get(i).get(2);
 				SnippetList.add(local);
 			}
 			
 		} catch (Exception e) {
-			log.info("Exception occur while getting BookID  "+e.getMessage());
-			System.out.println("Exception occur while getting BookID "+e.getMessage());
+			log.info("Exception occur while gettingSnippetList  "+e.getMessage());
+			System.out.println("Exception occur while gettingSnippetList "+e.getMessage());
 		}
 		return SnippetList;
 	}
 	
-	public void removeSnippet(String bookPath,int offset, int length)
+	public void removeSnippet(String bookPath,int offset, int length,int pageNumber)
 	{
 		int bookId =getBookID(bookPath);
 		
@@ -127,7 +138,7 @@ public class Book {
 				throw new IllegalStateException("The book is not added in the Database");
 			log.info("Deleting snippet from the database");
 			
-			String query = String.format("Delete from Snippet where bookId = %d and offset = %d and length = %d",bookId,offset,length);
+			String query = String.format("Delete from Snippet where book_id = %d and offset = %d and length = %d and page= %d",bookId,offset,length,pageNumber);
 			
 			db.deleteQuery(query);
 		} catch (Exception e) {

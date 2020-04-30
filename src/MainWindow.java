@@ -5,27 +5,32 @@ public class MainWindow{
 	
 	
 	public JFrame frame;
-	public JPanel bookCard;
-	public JPanel personalCard;
+	public JPanel jBookCard;
+	public BookCard bookCard;
+	public JPanel jPersonalCard;
 	public JPanel libraryPanel;
 	public Library library;
+	public PersonalVocabularyCard personalCard;
+	
 	//public ButtonListener bl;
 	public static String currentPanel;
-	public static String Panelfrom;
+	public static String panelFrom;
 	public static JPanel cards;
+	private Logger log; 
     // main class 
 	public MainWindow(WatchLibraryFolder ws)
 	{
 		
-		Logger log = Logger.getInstance();
+		log = Logger.getInstance();
 		log.info("Main Window initialized");
-		Panelfrom= new String();
+		panelFrom= new String();
 		//bl = new ButtonListener(this);
 	    frame = new JFrame("Book Reader");
 	   	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		cards = new JPanel(new CardLayout());;
 		library = new Library(ws,this);
 		libraryPanel = library.getPanel();
+		currentPanel = "Library";
 		cards.add(libraryPanel,"Library");
 		frame.getContentPane().add(cards);
 		frame.pack();
@@ -36,6 +41,7 @@ public class MainWindow{
 	
 	public void reloadWindow()
 	{
+		log.info("Reloading the window");
 		frame.revalidate();
 		frame.repaint();
 	}
@@ -98,30 +104,63 @@ public class MainWindow{
     {
     	this.Panelfrom = pf; 
     }
-    public void resetCard()
+    /*
+     * 
+     * 
+     * 
+     */
+	
+	public void resetCard()
+  
     {
     	
-    	
-    	cards.remove(bookCard);
-    	
+    	if(currentPanel=="Reader")
+    		{
+    			log.info("Removing the card Reader from card Layout");
+    			cards.remove(jBookCard);
+    			
+    		}
+    	else
+    	{
+    		log.info("Removing the card Reader from card Layout");
+    		cards.remove(jPersonalCard);
+    		currentPanel="Reader";
+    	}
+    		
     }
     
-    public void addCard()
+    public void addCard(String cardType, String bookPath)
     {
-    	card2 cd2 = new card2(this);
-    	bookcard = cd2.getPanel() ;
-    	cards.add(bookcard,"Reader");
+    	if(cardType=="Reader")
+    	{	
+    		bookCard = new BookCard(this,bookPath);
+    		panelFrom ="Library";
+    		currentPanel ="Reader";
+    		jBookCard = bookCard.getPanel() ;
+        	cards.add(jBookCard,"Reader");
+    	}
+    	else
+    	{
+    		personalCard = new PersonalVocabularyCard(this);
+    		panelFrom="Reader";
+    		currentPanel="PVocubalary";
+    		jPersonalCard = personalCard.getPanel() ;
+    		cards.add(jPersonalCard,"PVocubalary");
+    	}
+    			
+    	
     }
     
     public JPanel getCards()
     {
     	return this.cards;
     }
-    public void changescreen()
+    public void changeScreen(String screen)
     {
+    	log.info("Changing screen to "+screen);
     	CardLayout cardLayout = (CardLayout) cards.getLayout();
-    	cardLayout.show(cards,"Reader");
+    	cardLayout.show(cards, screen);
     }
-    */
+    
     
 } 

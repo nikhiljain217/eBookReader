@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.HashMap;
 import java.awt.image.BufferedImage;
 public class NullReader extends Reader{
 
@@ -10,13 +11,13 @@ public class NullReader extends Reader{
 	public int getTotalPageNumber()
 	{return 0;}
 	
-	public String getText(int numberofPages)
+	public HashMap<Integer,String> getText()
 	{
-		return "";
+		return (new HashMap<Integer,String>());
 				
 				
 	}
-	public BufferedImage getCover()
+	public BufferedImage getCover() throws IOException
 	{
 		return new BufferedImage(50, 50, BufferedImage.TYPE_INT_ARGB);
 	}

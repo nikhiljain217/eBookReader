@@ -1,9 +1,13 @@
 import java.sql.Connection;  
 import java.sql.DriverManager;  
 import java.sql.SQLException;  
-import java.sql.Statement;  
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;  
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+
 import org.sqlite.JDBC;
 
 
@@ -21,7 +25,7 @@ public class Database {
 	{
 		try {
 			Class.forName("org.sqlite.JDBC");
-			String url = "jdbc:sqlite:C:\\sqlite\\pdfDatabase.db";  
+			String url = "jdbc:sqlite:pdfDatabase.db";  
 	        // create a connection to the database  
 	        conn = DriverManager.getConnection(url);  
 	        this.conn.setAutoCommit(true);
@@ -55,15 +59,35 @@ public class Database {
 			}
 	}
 	
-	public synchronized ResultSet selectQuery(String query)
+	public synchronized ArrayList<ArrayList<Object>> selectQuery(String query)
 	{
-		ResultSet rs =null;
+		
+		Statement stmt =null;
+		ArrayList<ArrayList<Object>> results =new ArrayList<ArrayList<Object>>();
 		try
 		{
 			connect();
-			Statement stmt  = this.conn.createStatement();
+			stmt  = this.conn.createStatement();
 			log.info("Executing the query: "+query);
-			rs = stmt.executeQuery(query);
+			ResultSet rs = stmt.executeQuery(query);
+			
+			ResultSetMetaData rsmd = rs.getMetaData();
+			
+			
+			
+			
+			while(rs.next())
+			{
+				ArrayList<Object> singleTuple = new ArrayList<Object>();
+				for(int i=1;i<=rsmd.getColumnCount();i++)
+				{
+					singleTuple.add(rs.getObject(i));
+				}
+				results.add(singleTuple);
+			}
+			
+			
+			stmt.close();
 			this.disconnect();
 			
 			
@@ -79,8 +103,9 @@ public class Database {
 		finally
 		{
 			this.disconnect();
+			
 		}
-		return rs;
+		return results;
 		
 		
 	}
@@ -91,10 +116,10 @@ public class Database {
 		{
 			connect();
 			
-			Statement stmt  = this.conn.prepareStatement(query);
+			PreparedStatement stmt  = this.conn.prepareStatement(query);
 			log.info("Executing the query: "+query);
-			stmt.executeUpdate(query);
-			
+			stmt.executeUpdate();
+			stmt.close();
 			
 			
 			
@@ -104,7 +129,7 @@ public class Database {
 		{
 			
 			log.info("Exception occur at updateQuery "+e.getMessage());
-			System.out.println("Exception occur at selectQuery "+e.getMessage());
+			System.out.println("Exception occur at updateQuery "+e.getMessage());
 			
 			
 		}
@@ -127,11 +152,12 @@ public class Database {
 			
 			PreparedStatement stmt  = this.conn.prepareStatement(query);  
 			log.info("Executing the query: "+query);
+			System.out.println("Executing the query: "+query);
 			stmt.executeUpdate();
 			stmt = conn.prepareStatement("select last_insert_rowid();");
 			ResultSet rs = stmt.executeQuery();
 			record = rs.getInt(1);
-
+			stmt.close();
 			
 			
 			
@@ -139,8 +165,8 @@ public class Database {
 		catch(Exception e)
 		{
 			
-			log.info("Exception occur at selectQuery "+e.getMessage());
-			System.out.println("Exception occur at selectQuery "+e.getMessage());
+			log.info("Exception occur at updateQuery "+e.getMessage());
+			System.out.println("Exception occur at updateQuery "+e.getMessage());
 		}
 		finally
 		{

@@ -21,7 +21,7 @@ public class Library implements MyObserver{
 	WatchLibraryFolder wLibraryFolder;
 	ArrayList<JButton> bookButtonList;
 	ReaderFactory rFactory;
-	JPanel mainLayout;
+	
 	
 	JPanel jPanel;
 	private Logger log;
@@ -40,10 +40,6 @@ public class Library implements MyObserver{
 		bookPaths = new ArrayList<String>();
 		bookButtonList = new ArrayList<JButton>();
 		rFactory = new ReaderFactory();
-		mainLayout = new JPanel();
-		label = new JLabel("Library");
-		label.setFont(new Font("Serif", Font.BOLD, 25));
-		mainLayout.add(label);
 		jPanel = new JPanel(new GridLayout(0,4,5,5));
 		this.mWindow = mw;
 		initializeLibrary();
@@ -54,7 +50,7 @@ public class Library implements MyObserver{
 	
 	public JPanel getPanel()
 	{
-		return mainLayout;
+		return jPanel;
 	}
 	
 	public void initializeLibrary()
@@ -62,7 +58,7 @@ public class Library implements MyObserver{
 		
 		addFilesToBookPath();
 		setBookstoButtons();
-		mainLayout.add(jPanel);
+		
 	}
 	
 	public void addFilesToBookPath()
